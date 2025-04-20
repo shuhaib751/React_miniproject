@@ -7,3 +7,4 @@ import Contact from './components/Contact';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Cart from './components/Cart';
+// i edited
