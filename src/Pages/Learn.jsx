@@ -1,82 +1,127 @@
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Learn = () => {
   const navigate = useNavigate();
+  const [currentChapter, setCurrentChapter] = useState(0);
+  const [playedVideos, setPlayedVideos] = useState(new Set());
+  const playerRef = useRef(null);
+
+  const chapters = [
+    { title: "Expert for FR", videoId: "8YvzKN5GQ5I" },
+    { title: "Dark web", videoId: "cTix9GFQQnw" },
+    { title: "and Why Is It", videoId: "XqxQeHOJkfA" },
+    { title: "for Cyber sec", videoId: "d86D6a0dRqQ" },
+    { title: "Cyber securi", videoId: "e97E6e4rRqQ" },
+    { title: "Cyber securi", videoId: "f08F7f5sRqQ" },
+    { title: "Hacking", videoId: "g19G8g6tRqQ" },
+  ];
+
+  // Load YouTube Iframe API once
+  useEffect(() => {
+    if (!window.YT) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+    }
+
+    window.onYouTubeIframeAPIReady = () => {
+      createPlayer(chapters[currentChapter].videoId);
+    };
+  }, []);
+
+  // Re-create player when chapter changes
+  useEffect(() => {
+    if (window.YT && window.YT.Player) {
+      createPlayer(chapters[currentChapter].videoId);
+    }
+  }, [currentChapter]);
+
+  // Create new player instance
+  const createPlayer = (videoId) => {
+    if (playerRef.current) {
+      playerRef.current.destroy(); // remove old player
+    }
+
+    playerRef.current = new window.YT.Player("youtube-player", {
+      height: "390",
+      width: "100%",
+      videoId,
+      events: {
+        onStateChange: onPlayerStateChange,
+        onError: (event) => {
+          console.error("YouTube Player Error:", event.data);
+          alert("This video couldn't be played. Try again later.");
+        },
+      },
+    });
+  };
+
+  const onPlayerStateChange = (event) => {
+    if (event.data === window.YT.PlayerState.PLAYING) {
+      const currentVideoId = chapters[currentChapter].videoId;
+      setPlayedVideos((prev) => new Set([...prev, currentVideoId]));
+    }
+  };
+
+  const progress = (playedVideos.size / chapters.length) * 100;
 
   return (
-    <div className="w-full max-w-[1000px] mx-auto pt-8 px-4">
-      <button
-        className="mb-4 bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
-        onClick={() => navigate(-1)} // Go back to previous page
-      >
-        &larr; Back to Cart
-      </button>
-
-      <h2 className="text-3xl font-bold mb-6 text-green-700">Yoga Learning Center</h2>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Yoga Video 1 */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold mb-3">Morning Yoga Flow</h3>
-          <div className="aspect-video mb-3">
-            <iframe
-              className="w-full h-full rounded-lg"
-              src="https://www.youtube.com/embed/8YvzKN5GQ5I?si=LGV759aNkGZT06nS"
-              title="Morning Yoga"
-              allowFullScreen
-            ></iframe>
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
+      <div className="w-64 bg-gray-100 p-4 border-r border-gray-200 sticky top-0 h-screen">
+        <div className="mb-6">
+          <div className="text-sm font-medium text-gray-600 mb-2">
+            {Math.round(progress)}% Complete
           </div>
-          <p className="text-gray-600">
-            Start your day with this 15-minute energizing yoga sequence. Perfect for beginners, 
-            this flow will help improve flexibility and boost your energy levels.
-          </p>
+          <div className="w-full bg-gray-300 rounded-full h-2">
+            <div
+              className="bg-green-600 rounded-full h-2"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
         </div>
 
-        {/* Yoga Video 2 */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold mb-3">Stress Relief Session</h3>
-          <div className="aspect-video mb-3">
-            <iframe
-              className="w-full h-full rounded-lg"
-              src="https://www.youtube.com/embed/cTix9GFQQnw?si=SMEJb1aruFYSXuyY"
-              title="Stress Relief Yoga"
-              allowFullScreen
-            ></iframe>
-          </div>
-          <p className="text-gray-600">
-            20-minute gentle yoga practice to release tension and calm the mind. 
-            Ideal for evening practice or whenever you need to decompress.
-          </p>
-        </div>
-
-         {/* Yoga Video 1 */}
-         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold mb-3">Morning Yoga Flow</h3>
-          <div className="aspect-video mb-3">
-            <iframe
-              className="w-full h-full rounded-lg"
-              src="https://www.youtube.com/embed/8YvzKN5GQ5I?si=LGV759aNkGZT06nS"
-              title="Morning Yoga"
-              allowFullScreen
-            ></iframe>
-          </div>
-          <p className="text-gray-600">
-            Start your day with this 15-minute energizing yoga sequence. Perfect for beginners, 
-            this flow will help improve flexibility and boost your energy levels.
-          </p>
-        </div>
+        <nav>
+          {chapters.map((chapter, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentChapter(index)}
+              className={`w-full text-left p-2 mb-1 rounded-md flex items-center
+                ${currentChapter === index
+                  ? "bg-green-100 text-green-700 font-semibold"
+                  : "hover:bg-gray-200"}
+                ${playedVideos.has(chapter.videoId) ? "text-gray-800" : "text-gray-500"}`}
+            >
+              {playedVideos.has(chapter.videoId) && (
+                <span className="mr-2 text-green-600">✓</span>
+              )}
+              <span>
+                Chapter {index < 9 ? `0${index + 1}` : index + 1} | {chapter.title}
+              </span>
+            </button>
+          ))}
+        </nav>
       </div>
 
+      {/* Main content */}
+      <div className="flex-1 p-8">
+        <button
+          className="mb-6 bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+          onClick={() => navigate(-1)}
+        >
+          &larr; Back to Cart
+        </button>
 
-      <div className="mt-8 bg-green-50 p-6 rounded-lg">
-        <h3 className="text-2xl font-bold mb-4">Benefits of Regular Yoga Practice</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Improves flexibility and balance</li>
-          <li>Reduces stress and anxiety levels</li>
-          <li>Enhances mental focus and clarity</li>
-          <li>Strengthens core muscles</li>
-          <li>Promotes better sleep quality</li>
-        </ul>
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold mb-8">
+            {chapters[currentChapter].title}
+          </h2>
+
+          <div className="aspect-video bg-gray-200 rounded-lg overflow-hidden">
+            <div id="youtube-player" key={chapters[currentChapter].videoId}></div>
+          </div>
+        </div>
       </div>
     </div>
   );
