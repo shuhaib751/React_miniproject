@@ -1,43 +1,91 @@
-import { FaShoppingCart } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
-  const { cart } = useSelector((state) => state);
-
   return (
-    <div>
-      <nav className="flex justify-between items-center h-20 max-w-6xl mx-auto">
-        <NavLink to="/" className="flex items-center ml-5 space-x-4">
-          <div> 
-            <img src="logo.png" className="h-14" alt="Inner Peace Logo" />
-          </div>
-          <h1 className="text-white text-4xl font-bold tracking-wide">
-            INNER PEACE
-          </h1>
-        </NavLink>
-
-        <div className="flex items-center font-medium text-slate-100 mr-5 space-x-6">
-          <NavLink to="/" className="hover:text-green-400 transition-colors">
+    <nav className="bg-gray-900 text-white px-6 py-4">
+      <ul className="flex space-x-6">
+        <li>
+          <NavLink 
+            to="/" 
+            className={({ isActive }) => 
+              `hover:text-blue-400 ${isActive ? 'text-blue-400 font-semibold' : ''}`
+            }
+          >
             Home
           </NavLink>
-
-          {/* Added Learn Link */}
-          <NavLink to="/learn" className="hover:text-blue-400 transition-colors">
+        </li>
+        <li>
+          <NavLink 
+            to="/store"
+            className={({ isActive }) => 
+              `hover:text-blue-400 ${isActive ? 'text-blue-400 font-semibold' : ''}`
+            }
+          >
+            Store
+          </NavLink>
+        </li>
+        <li>
+          <NavLink 
+            to="/learn"
+            className={({ isActive }) => 
+              `hover:text-blue-400 ${isActive ? 'text-blue-400 font-semibold' : ''}`
+            }
+          >
             Learn
           </NavLink>
-
-          <NavLink to="/cart" className="relative">
-            <FaShoppingCart className="text-2xl hover:text-green-400 transition-colors"/>
-            {cart.length > 0 && (
-              <span className="absolute -top-1 -right-2 bg-green-600 text-xs w-5 h-5 flex justify-center items-center animate-bounce rounded-full text-white">
-                {cart.length}
-              </span>
-            )}
+        </li>
+        <li>
+          <NavLink 
+            to="/about"
+            className={({ isActive }) => 
+              `hover:text-blue-400 ${isActive ? 'text-blue-400 font-semibold' : ''}`
+            }
+          >
+            About
           </NavLink>
-        </div>
-      </nav>
-    </div>
+        </li>
+        <li>
+          <NavLink 
+            to="/contact"
+            className={({ isActive }) => 
+              `hover:text-blue-400 ${isActive ? 'text-blue-400 font-semibold' : ''}`
+            }
+          >
+            Contact
+          </NavLink>
+        </li>
+        <li>
+          <NavLink 
+            to="/login"
+            className={({ isActive }) => 
+              `hover:text-blue-400 ${isActive ? 'text-blue-400 font-semibold' : ''}`
+            }
+          >
+            Login
+          </NavLink>
+        </li>
+        <li>
+          <NavLink 
+            to="/signup"
+            className={({ isActive }) => 
+              `hover:text-blue-400 ${isActive ? 'text-blue-400 font-semibold' : ''}`
+            }
+          >
+            Sign Up
+          </NavLink>
+        </li>
+        <li>
+          <NavLink 
+            to="/cart"
+            className={({ isActive }) => 
+              `hover:text-blue-400 ${isActive ? 'text-blue-400 font-semibold' : ''}`
+            }
+          >
+            Cart
+          </NavLink>
+        </li>
+      </ul>
+    </nav>
   );
 };
 
