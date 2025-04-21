@@ -8,14 +8,15 @@ const Learn = () => {
   const playerRef = useRef(null);
 
   const chapters = [
-    { title: "Expert for FR", videoId: "8YvzKN5GQ5I" },
-    { title: "Dark web", videoId: "cTix9GFQQnw" },
-    { title: "and Why Is It", videoId: "XqxQeHOJkfA" },
-    { title: "for Cyber sec", videoId: "d86D6a0dRqQ" },
-    { title: "Cyber securi", videoId: "e97E6e4rRqQ" },
-    { title: "Cyber securi", videoId: "f08F7f5sRqQ" },
-    { title: "Hacking", videoId: "g19G8g6tRqQ" },
+    { title: "Yoga for Beginners", videoId: "yUBzHThl-d0" }, // Adriene - Beginner
+    { title: "Morning Yoga Flow", videoId: "8YvzKN5GQ5I" }, // Boho Beautiful
+    { title: "Yoga for Flexibility", videoId: "16u9UJekrG0" }, // Adriene - Flexibility
+    { title: "Yoga for Relaxation", videoId: "cTix9GFQQnw" }, // Slow Stretch
+    { title: "Stress Relief Yoga", videoId: "O6yzHkoDXZ8" }, // Calm stress relief
+    { title: "Bedtime Yoga Routine", videoId: "RI5gOBeTqyE" }, // Bedtime wind-down
+    { title: "Quick Yoga Break", videoId: "dxoY1i6alSk" }, // 5 min yoga break
   ];
+  
 
   // Load YouTube Iframe API once
   useEffect(() => {
@@ -119,8 +120,10 @@ const Learn = () => {
           </h2>
 
           <div className="aspect-video bg-gray-200 rounded-lg overflow-hidden">
-            <div id="youtube-player" key={chapters[currentChapter].videoId}></div>
-          </div>
+          <div id="youtube-player"></div>
+
+</div>
+
         </div>
       </div>
     </div>

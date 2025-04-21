@@ -12,22 +12,27 @@ import Store from "./Pages/Store";      // New import
 const App = () => {
   return (
     <>
+      {/* Navbar Section */}
       <div className="bg-slate-900 fixed w-full z-10">
         <Navbar />
       </div>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/store" element={<Store />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/learn" element={<Learn />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-      </Routes>
+      {/* Content Section */}
+      <div className="mt-[64px]"> {/* Adjust this value to match the navbar's height */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/store" element={<Store />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/learn" element={<Learn />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Routes>
+      </div>
     </>
   );
 };
 
 export default App;
+//changed byyyyy
