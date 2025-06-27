@@ -10,8 +10,8 @@ const Contact = () => {
       </p>
 
       <div className="space-y-2 text-lg">
-        <p><strong>Phone:</strong> +1 98364477</p>
-        <p><strong>Email:</strong> innerpeaceofficial@gmail.com</p>
+        <p><strong>Phone:</strong> +1 xxxxxxxx</p>
+        <p><strong>Email:</strong> example@gmail.com</p>
         <p><strong>Instagram:</strong> <a href="https://instagram.com/INNER_PEACE" className="text-blue-500">@INNER_PEACE</a></p>
         <p><strong>Facebook:</strong> <a href="https://facebook.com/INNER_PEACE" className="text-blue-500">INNER_PEACE</a></p>
         <p><strong>Address:</strong> Bangalore-64, Karnataka, India</p>

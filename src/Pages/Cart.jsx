@@ -1,15 +1,22 @@
+// src/pages/Cart.jsx
+
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import CartItem from "../components/CartItem"
+import { Link, useNavigate } from "react-router-dom";
+import CartItem from "../components/CartItem";
 import { useEffect, useState } from "react";
 
 const Cart = () => {
   const { cart } = useSelector((state) => state);
   const [totalAmount, setTotalAmount] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTotalAmount(cart.reduce((acc, curr) => acc + curr.price, 0));
   }, [cart]);
+
+  const handleCheckout = () => {
+    navigate("/bill"); // Navigate to the Bill page when "Checkout Now" is clicked
+  };
 
   return (
     <div className="w-full max-w-[1000px] mx-auto pt-4 relative">
@@ -34,7 +41,12 @@ const Cart = () => {
 
               <div>
                 <p className="">Total Amount: <span className="font-bold">${totalAmount.toFixed(2)}</span></p>
-                <button className="mt-2 bg-green-700 w-full text-white py-2 rounded-md">Checkout Now</button>
+                <button 
+                  className="mt-2 bg-green-700 w-full text-white py-2 rounded-md"
+                  onClick={handleCheckout} // Handle checkout button click
+                >
+                  Checkout Now
+                </button>
               </div>
             </div>
           </div>) :

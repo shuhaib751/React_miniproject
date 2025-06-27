@@ -11,20 +11,29 @@ const Home = () => {
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8">
         <img
-          src="https://images.unsplash.com/photo-1554311885-84c5b5bfa77d"
+          src="images.jpeg"
           alt="Yoga Pose 1"
           className="rounded-2xl shadow-lg w-full h-64 object-cover"
         />
         <img
-          src="https://images.unsplash.com/photo-1518611012118-f7f3c333b4d1"
+          src="download.jpeg"
           alt="Yoga Pose 2"
           className="rounded-2xl shadow-lg w-full h-64 object-cover"
         />
         <img
-          src="https://images.unsplash.com/photo-1552068751-34cb5cf055b0"
+          src="images (1).jpeg"
           alt="Yoga Pose 3"
           className="rounded-2xl shadow-lg w-full h-64 object-cover"
         />
+        <video
+  autoPlay
+  loop
+  muted
+  className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+>
+  <source src="video_preview_h264.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
       </div>
     </div>
   );
